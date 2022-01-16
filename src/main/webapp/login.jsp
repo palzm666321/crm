@@ -12,6 +12,65 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
 <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+
+		$(function(){
+
+			$("#loginAct").val("");
+			$("#loginAct").focus();
+
+			$(window).keydown(function (event){
+				if (event.keyCode==13){
+					login();
+				}
+			})
+
+			$("#submitBtn").click(function (){
+				login();
+			})
+
+		})
+
+		function login(){
+			var loginAct=$("#loginAct").val();
+			var loginPwd=$("#loginPwd").val();
+
+
+
+			if (loginAct == "" || loginPwd == ""){
+				$("#msg").html("请输入用户名和密码");
+				return false;
+			}
+
+			$.ajax({
+				url:"login.do",
+				data:{
+					"loginAct":loginAct,
+					"loginPwd":loginPwd
+				},
+				type:"post",
+				dataType:"json",
+				success:function (data){
+
+					if (data.success){
+						window.location.href="workbench/index.jsp";
+					}else{
+						$("#msg").html(data.msg);
+					}
+
+				},
+
+				error:function (e){
+					alert("系统错误");
+				}
+			})
+
+		}
+
+
+	</script>
+
 </head>
 <body>
 	<div style="position: absolute; top: 0px; left: 0px; width: 60%;">
@@ -26,20 +85,20 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<div class="page-header">
 				<h1>登录</h1>
 			</div>
-			<form action="workbench/index.html" class="form-horizontal" role="form">
+			<form action="workbench/index.jsp" class="form-horizontal" role="form">
 				<div class="form-group form-group-lg">
 					<div style="width: 350px;">
-						<input class="form-control" type="text" placeholder="用户名">
+						<input class="form-control" type="text" placeholder="用户名" id="loginAct">
 					</div>
 					<div style="width: 350px; position: relative;top: 20px;">
-						<input class="form-control" type="password" placeholder="密码">
+						<input class="form-control" type="password" placeholder="密码" id="loginPwd">
 					</div>
 					<div class="checkbox"  style="position: relative;top: 30px; left: 10px;">
 						
-							<span id="msg"></span>
+							<span id="msg" style="color: red"></span>
 						
 					</div>
-					<button type="submit" class="btn btn-primary btn-lg btn-block"  style="width: 350px; position: relative;top: 45px;">登录</button>
+					<button type="button" id="submitBtn" class="btn btn-primary btn-lg btn-block"  style="width: 350px; position: relative;top: 45px;">登录</button>
 				</div>
 			</form>
 		</div>

@@ -8,7 +8,7 @@
   
   <typeAliases>
   
-  	<package name="com.xxx.domain"/>
+  	<package name="com.bjpowernode.crm.settings.domain"/>
   	
   
   </typeAliases>
@@ -19,7 +19,7 @@
       <dataSource type="POOLED">
         <property name="driver" value="${jdbc.driver}"/>
         <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.user}"/>
+        <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
       </dataSource>
     </environment>
@@ -28,7 +28,7 @@
  
   <mappers>
    
-      <package name="com.xxx.dao"/>
+      <package name="com.bjpowernode.crm.settings.dao"/>
     
   </mappers>
 </configuration>
