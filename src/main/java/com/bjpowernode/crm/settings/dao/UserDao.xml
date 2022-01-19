@@ -11,7 +11,13 @@
 
     </select>
 	
-	
+
+    <select id="array" resultType="user">
+
+        select * from tbl_user
+
+    </select>
+
 </mapper>
 
 

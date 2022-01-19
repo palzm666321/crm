@@ -33,10 +33,17 @@
   <servlet-mapping>
     <servlet-name>UserController</servlet-name>
     <url-pattern>/login.do</url-pattern>
-
   </servlet-mapping>
 
-
+  <servlet>
+    <servlet-name>ActivityController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.ActivityController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/activity.do</url-pattern>
+    <url-pattern>/userlist.do</url-pattern>
+  </servlet-mapping>
 
 </web-app>
 
