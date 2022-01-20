@@ -43,6 +43,7 @@
     <servlet-name>ActivityController</servlet-name>
     <url-pattern>/activity.do</url-pattern>
     <url-pattern>/userlist.do</url-pattern>
+    <url-pattern>/pageList.do</url-pattern>
   </servlet-mapping>
 
 </web-app>

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.bjpowernode.crm.workbench.dao.ActivityDao">
 
-    <insert id="add" parameterType="Activity">
+    <insert id="add">
 
         insert into tbl_activity
         (
@@ -34,6 +34,60 @@
 
     </insert>
 
+    <select id="pageList" resultType="activity">
+
+        select a.id,u.name as owner,a.name,a.startDate,a.endDate
+        from tbl_activity a 
+        join tbl_user u
+        on a.owner=u.id
+        <where>
+            <if test="name != '' and name != null">
+                a.name like '%' #{name} '%'
+            </if>
+
+            <if test="owner != '' and owner != null">
+                and u.name like '%' #{owner} '%'
+            </if>
+
+            <if test="startDate != '' and startDate != null">
+                and a.startDate &gt; #{startDate}
+            </if>
+
+            <if test="endDate != '' and endDate != null">
+                and a.endDate &lt; #{endDate}
+            </if>
+        </where>
+
+        ORDER BY startDate desc
+        limit #{pageNo},#{pageSize}
+
+    </select>
+
+    <select id="count" resultType="int">
+
+        select count(*)
+        from tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+        <where>
+            <if test="name != '' and name != null">
+                a.name like '%' #{name} '%'
+            </if>
+
+            <if test="owner != '' and owner != null">
+                and u.name like '%' #{owner} '%'
+            </if>
+
+            <if test="startDate != '' and startDate != null">
+                and a.startDate &gt; #{startDate}
+            </if>
+
+            <if test="endDate != '' and endDate != null">
+                and a.endDate &lt; #{endDate}
+            </if>
+        </where>
+
+    </select>
 
 </mapper>
 
