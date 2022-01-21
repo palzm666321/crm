@@ -89,6 +89,42 @@
 
     </select>
 
+    <delete id="delete">
+
+        delete from tbl_activity
+        where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+
+            #{id}
+
+        </foreach>
+
+
+
+    </delete>
+
+    <select id="selectById" resultType="activity">
+
+        select * from tbl_activity where id=#{id}
+
+    </select>
+
+    <update id="updateById" parameterType="activity">
+
+        update tbl_activity
+        set
+           name=#{name},
+           owner=#{owner},
+           startDate=#{startDate},
+           endDate=#{endDate},
+           cost=#{cost},
+           description=#{description},
+           editTime=#{editTime},
+           editBy=#{editBy}
+        where id=#{id}
+
+    </update>
+
 </mapper>
 
 

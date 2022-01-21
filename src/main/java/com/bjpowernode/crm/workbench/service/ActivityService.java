@@ -14,4 +14,9 @@ public interface ActivityService {
 
     int count(Map<String ,Object> map);
 
+    boolean delete(String[] ids);
+
+    Activity selectBy(String id);
+
+    boolean update(Activity act);
 }

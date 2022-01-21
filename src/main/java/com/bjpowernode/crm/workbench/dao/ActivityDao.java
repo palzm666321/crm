@@ -13,4 +13,9 @@ public interface ActivityDao {
 
     int count(Map<String ,Object> map);
 
+    int delete(String[] ids);
+
+    Activity selectById(String id);
+
+    int updateById(Activity act);
 }

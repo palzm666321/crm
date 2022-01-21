@@ -41,9 +41,13 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ActivityController</servlet-name>
-    <url-pattern>/activity.do</url-pattern>
+    <url-pattern>/addActivity.do</url-pattern>
     <url-pattern>/userlist.do</url-pattern>
     <url-pattern>/pageList.do</url-pattern>
+    <url-pattern>/deleteActivity.do</url-pattern>
+    <url-pattern>/selectActivity.do</url-pattern>
+    <url-pattern>/updateActivity.do</url-pattern>
+
   </servlet-mapping>
 
 </web-app>

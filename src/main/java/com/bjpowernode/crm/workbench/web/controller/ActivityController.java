@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.AlgorithmConstraints;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,16 +22,9 @@ import java.util.SortedMap;
 
 public class ActivityController extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path=req.getServletPath();
-
-        if ("/userlist.do".equals(path)){
-            getUserList(req,resp);
-        }else if ("/pageList.do".equals(path)){
-            getPageList(req,resp);
-        }
+        doPost(req,resp);
     }
 
     @Override
@@ -38,9 +32,64 @@ public class ActivityController extends HttpServlet {
 
         String path=req.getServletPath();
 
-        if ("/activity.do".equals(path)){
+        if ("/addActivity.do".equals(path)){
             add(req,resp);
+        }else if ("/userlist.do".equals(path)){
+            getUserList(req,resp);
+        }else if ("/pageList.do".equals(path)){
+            getPageList(req,resp);
+        }else if ("/deleteActivity.do".equals(path)){
+            delete(req,resp);
+        }else if ("/selectActivity.do".equals(path)){
+            getActivityById(req,resp);
+        }else if ("/updateActivity.do".equals(path)){
+            UpdateActivityById(req,resp);
         }
+
+
+    }
+
+    private void UpdateActivityById(HttpServletRequest req, HttpServletResponse resp) {
+
+        ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        Activity act=new Activity();
+
+        act.setId(req.getParameter("id"));
+        act.setOwner(req.getParameter("owner"));
+        act.setName(req.getParameter("name"));
+        act.setStartDate(req.getParameter("startDate"));
+        act.setEndDate(req.getParameter("endDate"));
+        act.setCost(req.getParameter("cost"));
+        act.setDescription(req.getParameter("describe"));
+        act.setEditBy(((User)req.getSession().getAttribute("user")).getName());
+        act.setEditTime(DateTimeUtil.getSysTime());
+
+        PrintJson.printJsonFlag(resp,as.update(act));
+
+
+
+    }
+
+    private void getActivityById(HttpServletRequest req, HttpServletResponse resp) {
+
+        ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        Activity act=as.selectBy(req.getParameter("id"));
+
+        PrintJson.printJsonObj(resp,act);
+
+
+    }
+
+    private void delete(HttpServletRequest req, HttpServletResponse resp) {
+
+        ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        String[] ids=req.getParameterValues("id");
+
+        PrintJson.printJsonFlag(resp,as.delete(ids));
+
 
 
     }
@@ -68,14 +117,14 @@ public class ActivityController extends HttpServlet {
         map.put("pageSize",Integer.parseInt(req.getParameter("pageSize")));
 
         ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
         ActivityListVo<Activity> vo=as.pageList(map);
         PrintJson.printJsonObj(resp,vo);
 
     }
 
-        protected void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
         Activity act=new Activity();
         act.setId(UUIDUtil.getUUID());
         act.setOwner(req.getParameter("owner"));
@@ -87,7 +136,7 @@ public class ActivityController extends HttpServlet {
         act.setCreateTime(DateTimeUtil.getSysTime());
         act.setCreateBy(((User)req.getSession().getAttribute("user")).getName());
 
-
+        ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
         boolean flag = as.add(act);
         PrintJson.printJsonFlag(resp,flag);
 
