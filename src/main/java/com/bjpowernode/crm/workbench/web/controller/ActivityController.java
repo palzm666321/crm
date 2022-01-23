@@ -6,6 +6,7 @@ import com.bjpowernode.crm.settings.service.impl.UserServiceImpl;
 import com.bjpowernode.crm.utils.*;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.ActivityListVo;
+import com.bjpowernode.crm.workbench.domain.ActivityRemark;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
 
@@ -44,8 +45,79 @@ public class ActivityController extends HttpServlet {
             getActivityById(req,resp);
         }else if ("/updateActivity.do".equals(path)){
             UpdateActivityById(req,resp);
+        }else if ("/workbench/activity/detail.do".equals(path)){
+            detail(req,resp);
+        }else if ("/activityRemarkList.do".equals(path)){
+            getRemarkList(req,resp);
+        }else if ("/deleteRemark.do".equals(path)){
+            deleteRemark(req,resp);
+        }else if ("/insertRemark.do".equals(path)){
+            insertRemark(req,resp);
+        }else if ("/editRemark.do".equals(path)){
+            editRemark(req,resp);
         }
 
+    }
+
+    private void editRemark(HttpServletRequest req, HttpServletResponse resp) {
+
+        ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        ActivityRemark ar=new ActivityRemark();
+        ar.setId(req.getParameter("id"));
+        ar.setNoteContent(req.getParameter("text"));
+        ar.setEditFlag("1");
+        ar.setEditTime(DateTimeUtil.getSysTime());
+        ar.setEditBy(((User)req.getSession().getAttribute("user")).getName());
+        PrintJson.printJsonObj(resp,as.updateRemark(ar));
+
+    }
+
+    private void insertRemark(HttpServletRequest req, HttpServletResponse resp) {
+
+        ActivityRemark ar=new ActivityRemark();
+        String id=UUIDUtil.getUUID();
+        ar.setId(id);
+        ar.setNoteContent(req.getParameter("text"));
+        ar.setEditFlag("0");
+        ar.setActivityId(req.getParameter("id"));
+        ar.setCreateTime(DateTimeUtil.getSysTime());
+        ar.setCreateBy(((User)req.getSession().getAttribute("user")).getName());
+
+        ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        Map<String,Object> map=as.insertRemarkAndRemarkById(ar);
+
+        PrintJson.printJsonObj(resp,map);
+
+    }
+
+    private void deleteRemark(HttpServletRequest req, HttpServletResponse resp) {
+
+        ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        PrintJson.printJsonFlag(resp,as.deleteRemark(req.getParameter("id")));
+
+    }
+
+    private void getRemarkList(HttpServletRequest req, HttpServletResponse resp) {
+
+        ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        List<ActivityRemark> list=as.getRemarkList();
+
+        PrintJson.printJsonObj(resp,list);
+
+    }
+
+    protected void detail(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+
+        ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        Activity act=as.selectById(req.getParameter("id"));
+
+        req.setAttribute("act",act);
+
+        req.getRequestDispatcher("/workbench/activity/detail.jsp").forward(req,resp);
 
     }
 

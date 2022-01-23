@@ -5,6 +5,12 @@
 
 <mapper namespace="com.bjpowernode.crm.workbench.dao.ActivityRemarkDao">
 
+    <select id="getRemarkList" resultType="activityRemark">
+
+        select * from tbl_activity_remark
+
+    </select>
+
     <select id="deleteCount" resultType="int">
 
         select count(*)
@@ -28,6 +34,40 @@
         </foreach>
 
     </delete>
+
+    <delete id="deleteRemark">
+
+        delete
+        from tbl_activity_remark
+        where id=#{id}
+
+
+    </delete>
+
+    <insert id="insertRemark">
+
+        insert into tbl_activity_remark
+        (id,noteContent,createTime,createBy,editFlag,activityId)
+        values
+        (
+        #{id},#{noteContent},#{createTime},#{createBy},#{editFlag},#{activityId}
+        )
+
+    </insert>
+
+    <select id="selectById" resultType="activityRemark">
+        select * from tbl_activity_remark where id=#{id}
+    </select>
+
+    <update id="updateRemark" parameterType="activityRemark">
+
+        update tbl_activity_remark
+        set
+        noteContent=#{noteContent},editTime=#{editTime},editBy=#{editBy},editFlag=#{editFlag}
+        where id=#{id}
+
+
+    </update>
 
 </mapper>
 

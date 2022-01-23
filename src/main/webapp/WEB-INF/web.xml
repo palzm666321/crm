@@ -47,7 +47,11 @@
     <url-pattern>/deleteActivity.do</url-pattern>
     <url-pattern>/selectActivity.do</url-pattern>
     <url-pattern>/updateActivity.do</url-pattern>
-
+    <url-pattern>/workbench/activity/detail.do</url-pattern>
+    <url-pattern>/activityRemarkList.do</url-pattern>
+    <url-pattern>/deleteRemark.do</url-pattern>
+    <url-pattern>/insertRemark.do</url-pattern>
+    <url-pattern>/editRemark.do</url-pattern>
   </servlet-mapping>
 
 </web-app>

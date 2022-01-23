@@ -1,10 +1,14 @@
 package com.bjpowernode.crm.test;
 
 import com.bjpowernode.crm.settings.dao.UserDao;
+import com.bjpowernode.crm.settings.domain.User;
+import com.bjpowernode.crm.utils.DateTimeUtil;
 import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.utils.SqlSessionUtil;
+import com.bjpowernode.crm.utils.UUIDUtil;
 import com.bjpowernode.crm.workbench.dao.ActivityRemarkDao;
 import com.bjpowernode.crm.workbench.domain.Activity;
+import com.bjpowernode.crm.workbench.domain.ActivityRemark;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
 
@@ -17,6 +21,23 @@ public class test {
 
         UserDao userDao= SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
         ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        ActivityRemarkDao activityRemarkDao= SqlSessionUtil.getSqlSession().getMapper(ActivityRemarkDao.class);
+
+
+        ActivityRemark ar=new ActivityRemark();
+        ar.setId(UUIDUtil.getUUID());
+        ar.setNoteContent("23131");
+        ar.setEditFlag("0");
+        ar.setActivityId("16689caa68134f2a8691f602b9187029");
+        ar.setCreateTime(DateTimeUtil.getSysTime());
+        ar.setCreateBy("张三");
+
+        Map<String,Object> map=as.insertRemarkAndRemarkById(ar);
+
+        System.out.println(map);
+
+
+       // System.out.println(as.selectById("8ed3819dc978405a862a73143f3bf7d6"));
 
         /*
         //查询表
