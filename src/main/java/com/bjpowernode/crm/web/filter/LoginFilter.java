@@ -1,4 +1,4 @@
-package com.bjpowernode.crm.filter;
+package com.bjpowernode.crm.web.filter;
 
 import com.bjpowernode.crm.settings.domain.User;
 

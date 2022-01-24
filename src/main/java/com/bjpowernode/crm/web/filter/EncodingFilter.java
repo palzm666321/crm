@@ -1,4 +1,4 @@
-package com.bjpowernode.crm.filter;
+package com.bjpowernode.crm.web.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
