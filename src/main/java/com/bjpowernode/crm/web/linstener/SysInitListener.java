@@ -4,15 +4,13 @@ import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.workbench.domain.DicValue;
 import com.bjpowernode.crm.workbench.service.DicValueService;
 import com.bjpowernode.crm.workbench.service.impl.DicValueServiceImpl;
-
-import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 
 public class SysInitListener implements ServletContextListener {
 

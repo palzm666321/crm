@@ -1,25 +1,24 @@
 package com.bjpowernode.crm.test;
 
 import com.bjpowernode.crm.settings.dao.UserDao;
-import com.bjpowernode.crm.settings.domain.User;
 import com.bjpowernode.crm.utils.DateTimeUtil;
 import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.utils.SqlSessionUtil;
 import com.bjpowernode.crm.utils.UUIDUtil;
 import com.bjpowernode.crm.workbench.dao.ActivityRemarkDao;
-import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.ActivityRemark;
 import com.bjpowernode.crm.workbench.service.ActivityService;
+import com.bjpowernode.crm.workbench.service.ClueService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
+import com.bjpowernode.crm.workbench.service.impl.ClueServiceImpl;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class test {
 
     public static void main(String[] args) {
 
-        UserDao userDao= SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
+/*        UserDao userDao= SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
         ActivityService as=(ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
         ActivityRemarkDao activityRemarkDao= SqlSessionUtil.getSqlSession().getMapper(ActivityRemarkDao.class);
 
@@ -34,7 +33,7 @@ public class test {
 
         Map<String,Object> map=as.insertRemarkAndRemarkById(ar);
 
-        System.out.println(map);
+        System.out.println(map);*/
 
 
        // System.out.println(as.selectById("8ed3819dc978405a862a73143f3bf7d6"));
@@ -77,6 +76,10 @@ public class test {
 
         System.out.println(as.update(ac));
 */
+
+
+        ClueService dvs= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        System.out.println(dvs);
 
     }
 

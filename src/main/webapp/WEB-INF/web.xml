@@ -57,6 +57,16 @@
     <url-pattern>/editRemark.do</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>ClueController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.ClueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/insertClue.do</url-pattern>
+    <url-pattern>/workbench/clue/userList.do</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
 
 

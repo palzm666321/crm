@@ -1,8 +1,11 @@
 package com.bjpowernode.crm.workbench.service.impl;
 
+import com.bjpowernode.crm.settings.dao.UserDao;
+import com.bjpowernode.crm.settings.domain.User;
 import com.bjpowernode.crm.utils.SqlSessionUtil;
 import com.bjpowernode.crm.workbench.dao.DicTypeDao;
 import com.bjpowernode.crm.workbench.dao.DicValueDao;
+import com.bjpowernode.crm.workbench.domain.Clue;
 import com.bjpowernode.crm.workbench.domain.DicType;
 import com.bjpowernode.crm.workbench.domain.DicValue;
 import com.bjpowernode.crm.workbench.service.DicValueService;
@@ -16,6 +19,7 @@ public class DicValueServiceImpl implements DicValueService {
     private DicTypeDao dicTypeDao= SqlSessionUtil.getSqlSession().getMapper(DicTypeDao.class);
     private DicValueDao dicValueDao= SqlSessionUtil.getSqlSession().getMapper(DicValueDao.class);
 
+
     @Override
     public Map<String,List<DicValue>> getAll() {
 
@@ -27,4 +31,7 @@ public class DicValueServiceImpl implements DicValueService {
 
         return map;
     }
+
+
+
 }

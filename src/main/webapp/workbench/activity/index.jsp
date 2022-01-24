@@ -115,23 +115,19 @@
 					dataType: "json",
 					type: "get",
 					success:function (data){
-					var html="<option></option>"
-
+						var html="<option></option>"
 						$.each(data,function(i,n){
-							var name=n.name;
-							if (	"${user.name}" == name ){
-								html+="<option value="+n.id+" selected>"+name+"</option>"
-							}else{
-								html+="<option value="+n.id+">"+name+"</option>"
+							if (n.name == '${user.name}'){
+								html+="<option value="+n.id+" selected>"+n.name+"</option>"
+							}else {
+								html += "<option value=" + n.id + ">" + n.name + "</option>"
 							}
-
 						})
 
-
 						$("#create-owner").html(html);
+
 					}
 				})
-
 
 
 				$("#createActivityModal").modal("show");
@@ -216,7 +212,6 @@
 						success:function (data){
 
 							if (data.success){
-								alert(data)
 								alert("删除成功");
 								pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
 							}else{
@@ -365,10 +360,7 @@
 						<div class="form-group">
 							<label for="create-marketActivityOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<select class="form-control" id="create-owner">
-
-
-								</select>
+								<select class="form-control" id="create-owner"></select>
 							</div>
                             <label for="create-marketActivityName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
