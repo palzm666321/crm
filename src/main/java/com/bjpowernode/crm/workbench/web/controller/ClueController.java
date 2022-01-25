@@ -8,6 +8,8 @@ import com.bjpowernode.crm.utils.PrintJson;
 import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.utils.UUIDUtil;
 import com.bjpowernode.crm.workbench.domain.Clue;
+import com.bjpowernode.crm.workbench.domain.ClueActivityRelation;
+import com.bjpowernode.crm.workbench.domain.ClueActivityRelationVo;
 import com.bjpowernode.crm.workbench.service.ClueService;
 import com.bjpowernode.crm.workbench.service.DicValueService;
 import com.bjpowernode.crm.workbench.service.impl.ClueServiceImpl;
@@ -36,7 +38,54 @@ public class ClueController extends HttpServlet {
             insertClue(req,resp);
         }else if ("/workbench/clue/userList.do".equals(path)){
             userList(req,resp);
+        }else if ("/workbench/clue/detail.do".equals(path)){
+            detail(req,resp);
+        }else if ("/workbench/clue/activityAndClueRelationList.do".equals(path)){
+            activityAndClueRelationList(req,resp);
+        }else if ("/workbench/clue/deleteActivityAndClueRelationList.do".equals(path)){
+            deleteActivityAndClueRelationList(req,resp);
         }
+
+    }
+
+    private void deleteActivityAndClueRelationList(HttpServletRequest req, HttpServletResponse resp) {
+
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        PrintJson.printJsonFlag(resp,clueService.deleteActivityAndClueRelationById(req.getParameter("id")));
+
+    }
+
+    private void activityAndClueRelationList(HttpServletRequest req, HttpServletResponse resp) {
+
+      /*  ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        ClueActivityRelation car=new ClueActivityRelation();
+
+        car.setId(UUIDUtil.getUUID());
+
+        car.setClueId(req.getParameter("id"));
+
+        car.setActivityId(clueService.getActivityById("id"));*/
+
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        List<ClueActivityRelationVo> list=clueService.getActivityAndClueRelationList(req.getParameter("id"));
+        System.out.println(list);
+
+        PrintJson.printJsonObj(resp,list);
+
+    }
+
+    private void detail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        Clue c=clueService.getClueById(req.getParameter("id"));
+
+        req.setAttribute("c",c);
+
+        req.getRequestDispatcher("/workbench/clue/detail.jsp").forward(req,resp);
 
     }
 
