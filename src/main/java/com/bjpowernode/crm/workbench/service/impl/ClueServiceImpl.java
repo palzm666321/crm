@@ -1,6 +1,7 @@
 package com.bjpowernode.crm.workbench.service.impl;
 
 import com.bjpowernode.crm.utils.SqlSessionUtil;
+import com.bjpowernode.crm.utils.UUIDUtil;
 import com.bjpowernode.crm.workbench.dao.ClueDao;
 import com.bjpowernode.crm.workbench.dao.DicTypeDao;
 import com.bjpowernode.crm.workbench.dao.DicValueDao;
@@ -27,11 +28,6 @@ public class ClueServiceImpl implements ClueService {
     }
 
     @Override
-    public String getActivityById(String id) {
-        return null;
-    }
-
-    @Override
     public List<ClueActivityRelationVo> getActivityAndClueRelationList(String id) {
         return clueDao.getActivityAndClueRelation(id);
     }
@@ -39,5 +35,25 @@ public class ClueServiceImpl implements ClueService {
     @Override
     public boolean deleteActivityAndClueRelationById(String id) {
         return clueDao.deleteActivityAndClueRelationById(id) == 1 ;
+    }
+
+    @Override
+    public List<ClueActivityRelationVo> getActivityRelationLikeList(Map<String,Object> map) {
+        return clueDao.getActivityRelationLikeList(map);
+    }
+
+    @Override
+    public boolean insertRelation(String cid,String[] arr) {
+
+        ClueActivityRelation car=new ClueActivityRelation();
+        boolean flag=false;
+        for(int i=0;i<arr.length;i++){
+            car.setId(UUIDUtil.getUUID());
+            car.setClueId(cid);
+            car.setActivityId(arr[i]);
+            flag=clueDao.insertRelation(car) == 1;
+        }
+
+        return flag;
     }
 }

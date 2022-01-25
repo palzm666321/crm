@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ClueController extends HttpServlet {
 
@@ -44,7 +46,33 @@ public class ClueController extends HttpServlet {
             activityAndClueRelationList(req,resp);
         }else if ("/workbench/clue/deleteActivityAndClueRelationList.do".equals(path)){
             deleteActivityAndClueRelationList(req,resp);
+        }else if ("/workbench/clue/activityRelationLikeList.do".equals(path)){
+            activityRelationLikeList(req,resp);
+        }else if ("/workbench/clue/insertRelation.do".equals(path)){
+            insertRelation(req,resp);
         }
+
+    }
+
+    private void insertRelation(HttpServletRequest req, HttpServletResponse resp) {
+
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        
+
+        PrintJson.printJsonFlag(resp,clueService.insertRelation(req.getParameter("cid"),req.getParameterValues("aid")));
+
+    }
+
+    private void activityRelationLikeList(HttpServletRequest req, HttpServletResponse resp) {
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        Map<String,Object> map=new HashMap<>();
+        map.put("id",req.getParameter("id"));
+        map.put("name",req.getParameter("name"));
+
+        PrintJson.printJsonObj(resp,clueService.getActivityRelationLikeList(map));
+
 
     }
 
@@ -58,20 +86,9 @@ public class ClueController extends HttpServlet {
 
     private void activityAndClueRelationList(HttpServletRequest req, HttpServletResponse resp) {
 
-      /*  ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
-
-        ClueActivityRelation car=new ClueActivityRelation();
-
-        car.setId(UUIDUtil.getUUID());
-
-        car.setClueId(req.getParameter("id"));
-
-        car.setActivityId(clueService.getActivityById("id"));*/
-
         ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
 
         List<ClueActivityRelationVo> list=clueService.getActivityAndClueRelationList(req.getParameter("id"));
-        System.out.println(list);
 
         PrintJson.printJsonObj(resp,list);
 

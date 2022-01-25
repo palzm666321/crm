@@ -92,7 +92,7 @@
         on a.id=c.activityId
         join tbl_user u
         on a.owner=u.id
-        where c.clueId=#{id}
+        where a.id in (select activityId from tbl_clue_activity_relation where clueId=#{id})
 
     </select>
 
@@ -101,6 +101,30 @@
         delete from tbl_clue_activity_relation where id=#{id}
 
     </delete>
+
+    <select id="getActivityRelationLikeList" resultType="clueActivityRelationVo">
+
+        select a.id as relationId,a.name,a.startDate,a.endDate,u.name as owner
+        from tbl_activity a
+        join tbl_user u
+        on u.id=a.owner
+        where a.id not in (select activityId from tbl_clue_activity_relation where clueId=#{id})
+        and a.name like '%' #{name} '%'
+
+    </select>
+
+    <insert id="insertRelation">
+
+        insert into tbl_clue_activity_relation
+        (
+            id,clueId,activityId
+        )
+        values
+        (
+            #{id},#{clueId},#{activityId}
+        )
+
+    </insert>
 
 </mapper>
 
