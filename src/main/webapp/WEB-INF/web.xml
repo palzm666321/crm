@@ -70,6 +70,8 @@
     <url-pattern>/workbench/clue/deleteActivityAndClueRelationList.do</url-pattern>
     <url-pattern>/workbench/clue/activityRelationLikeList.do</url-pattern>
     <url-pattern>/workbench/clue/insertRelation.do</url-pattern>
+    <url-pattern>/workbench/clue/activityList.do</url-pattern>
+    <url-pattern>/workbench/clue/insertContact.do</url-pattern>
   </servlet-mapping>
   
 </web-app>

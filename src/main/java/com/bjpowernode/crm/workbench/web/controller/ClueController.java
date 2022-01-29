@@ -10,6 +10,7 @@ import com.bjpowernode.crm.utils.UUIDUtil;
 import com.bjpowernode.crm.workbench.domain.Clue;
 import com.bjpowernode.crm.workbench.domain.ClueActivityRelation;
 import com.bjpowernode.crm.workbench.domain.ClueActivityRelationVo;
+import com.bjpowernode.crm.workbench.domain.Tran;
 import com.bjpowernode.crm.workbench.service.ClueService;
 import com.bjpowernode.crm.workbench.service.DicValueService;
 import com.bjpowernode.crm.workbench.service.impl.ClueServiceImpl;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +52,34 @@ public class ClueController extends HttpServlet {
             activityRelationLikeList(req,resp);
         }else if ("/workbench/clue/insertRelation.do".equals(path)){
             insertRelation(req,resp);
+        }else if ("/workbench/clue/insertContact.do".equals(path)){
+            insertContact(req,resp);
+        }
+
+    }
+
+    private void insertContact(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        String createBy=((User)req.getSession().getAttribute("user")).getName();
+        Tran t=null;
+
+        String courId=req.getParameter("clueId");
+        String flag=req.getParameter("flag");
+        if ("a".equals(flag)){
+            t=new Tran();
+            t.setId(UUIDUtil.getUUID());
+            t.setActivityId(req.getParameter("activityId"));
+            t.setName(req.getParameter("name"));
+            t.setStage(req.getParameter("stage"));
+            t.setExpectedDate(req.getParameter("date"));
+            t.setMoney(req.getParameter("money"));
+            t.setCreateBy(createBy);
+            t.setCreateTime(DateTimeUtil.getSysTime());
+        }
+        boolean flag1=clueService.insertContact(courId,t,createBy);
+        if (flag1){
+            resp.sendRedirect(req.getContextPath()+"/workbench/clue/index.jsp");
         }
 
     }
@@ -57,9 +87,6 @@ public class ClueController extends HttpServlet {
     private void insertRelation(HttpServletRequest req, HttpServletResponse resp) {
 
         ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
-
-        
-
         PrintJson.printJsonFlag(resp,clueService.insertRelation(req.getParameter("cid"),req.getParameterValues("aid")));
 
     }

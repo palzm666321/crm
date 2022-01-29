@@ -49,4 +49,7 @@ public interface ClueService {
   * @return true，false
   */
  boolean insertRelation(String cid,String[] arr);
+
+
+ boolean insertContact(String clueId, Tran t,String createBy);
 }

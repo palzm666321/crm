@@ -21,4 +21,8 @@ public interface ClueDao {
     List<ClueActivityRelationVo> getActivityRelationLikeList(Map<String,Object> map);
 
     int insertRelation(ClueActivityRelation car);
+
+    Clue getClueId(String courId);
+
+    int delete(String clueId);
 }
