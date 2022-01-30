@@ -7,9 +7,9 @@ import com.bjpowernode.crm.workbench.service.impl.DicValueServiceImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import static java.util.ResourceBundle.getBundle;
 
 
 public class SysInitListener implements ServletContextListener {
@@ -30,6 +30,21 @@ public class SysInitListener implements ServletContextListener {
         key.forEach(i -> application.setAttribute(i,map.get(i)));
 
         System.out.println("数据字典结束");
+
+
+        Map<String,String> pMap=new HashMap<String, String>();
+
+        ResourceBundle rb= ResourceBundle.getBundle("Stage2Possibility");
+
+        Enumeration<String> key1=rb.getKeys();
+
+        while (key1.hasMoreElements()){
+            String key2=key1.nextElement();
+            String value=rb.getString(key2);
+            pMap.put(key2,value);
+        }
+        application.setAttribute("pMap",pMap);
+
 
     }
 

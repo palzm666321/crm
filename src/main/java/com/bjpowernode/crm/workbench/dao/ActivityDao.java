@@ -20,4 +20,6 @@ public interface ActivityDao {
     int updateById(Activity act);
 
     Activity selectById(String id);
+
+    List<Activity> getActivityLikeList(String name);
 }

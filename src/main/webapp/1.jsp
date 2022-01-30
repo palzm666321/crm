@@ -21,6 +21,15 @@ $.ajax({
     }
 })
 
+$(".time").datetimepicker({
+minView: "month",
+language:  'zh-CN',
+format: 'yyyy-mm-dd',
+autoclose: true,
+todayBtn: true,
+pickerPosition: "top-left"
+});
+
 ((User)req.getSession().getAttribute("user")).getName()
 DateTimeUtil.getSysTime()
 

@@ -73,7 +73,20 @@
     <url-pattern>/workbench/clue/activityList.do</url-pattern>
     <url-pattern>/workbench/clue/insertContact.do</url-pattern>
   </servlet-mapping>
-  
+
+
+  <servlet>
+    <servlet-name>TranController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.TranController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TranController</servlet-name>
+    <url-pattern>/workbench/transaction/save.do</url-pattern>
+    <url-pattern>/workbench/transaction/ActivityLikeList.do</url-pattern>
+    <url-pattern>/workbench/transaction/ContactsLikeList.do</url-pattern>
+    <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
+    <url-pattern>/workbench/transaction/insertTran.do</url-pattern>
+  </servlet-mapping>
 </web-app>
 
 

@@ -18,6 +18,12 @@
 
     </select>
 
+    <select id="getOwnerList" resultType="user">
+
+        select a.id,a.owner as name from tbl_activity a join tbl_user u on a.owner=u.id
+
+    </select>
+
 </mapper>
 
 

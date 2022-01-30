@@ -44,4 +44,9 @@ public class UserServiceImpl implements UserService {
     public List<User> array() {
         return userDao.array();
     }
+
+    @Override
+    public List<User> getOwnerList() {
+        return userDao.getOwnerList();
+    }
 }

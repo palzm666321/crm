@@ -144,6 +144,16 @@
 
     </select>
 
+    <select id="getActivityLikeList" resultType="activity">
+
+        select a.id,u.name as owner,a.name,a.startDate,a.endDate
+        from tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+        where a.name like '%' #{name} '%'
+
+    </select>
+
 </mapper>
 
 

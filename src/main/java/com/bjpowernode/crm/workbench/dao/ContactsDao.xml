@@ -53,6 +53,14 @@
         )
 
     </insert>
+
+    <select id="getContactsLikeList" resultType="contacts">
+
+        select id,fullname,email,mphone
+        from tbl_contacts
+        where fullname like '%' #{name} '%'
+
+    </select>
   	
 </mapper>
 

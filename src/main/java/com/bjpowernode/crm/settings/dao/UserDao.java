@@ -11,4 +11,5 @@ public interface UserDao {
 
      List<User> array();
 
+    List<User> getOwnerList();
 }

@@ -10,4 +10,5 @@ public interface UserService {
 
     List<User> array();
 
+    List<User> getOwnerList();
 }
