@@ -9,4 +9,7 @@ public interface TranDao {
 
     int insert(Tran t);
 
+    Tran selectById(String id);
+
+    int updateChangStage(Tran t);
 }

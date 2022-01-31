@@ -15,4 +15,10 @@ public interface TranService{
     List<String> getCustomerNameList(String name);
 
     boolean insert(Tran t,String customerName);
+
+    Tran getTranById(String id);
+
+    List<TranHistory> getTranHistoryByIdList(String tranId);
+
+    Map<String, Object> changStage(Tran t);
 }

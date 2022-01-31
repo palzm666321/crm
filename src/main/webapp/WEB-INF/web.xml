@@ -86,6 +86,9 @@
     <url-pattern>/workbench/transaction/ContactsLikeList.do</url-pattern>
     <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
     <url-pattern>/workbench/transaction/insertTran.do</url-pattern>
+    <url-pattern>/workbench/transaction/detail.do</url-pattern>
+    <url-pattern>/workbench/transaction/TranHistoryByIdList.do</url-pattern>
+    <url-pattern>/workbench/transaction/changStage.do</url-pattern>
   </servlet-mapping>
 </web-app>
 

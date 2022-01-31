@@ -7,10 +7,7 @@ import com.bjpowernode.crm.utils.DateTimeUtil;
 import com.bjpowernode.crm.utils.PrintJson;
 import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.utils.UUIDUtil;
-import com.bjpowernode.crm.workbench.domain.Activity;
-import com.bjpowernode.crm.workbench.domain.ActivityListVo;
-import com.bjpowernode.crm.workbench.domain.ActivityRemark;
-import com.bjpowernode.crm.workbench.domain.Tran;
+import com.bjpowernode.crm.workbench.domain.*;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.service.TranService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
@@ -25,6 +22,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class TranController extends HttpServlet {
 
@@ -48,7 +46,69 @@ public class TranController extends HttpServlet {
             getCustomerName(req,resp);
         }else if ("/workbench/transaction/insertTran.do".equals(path)){
             InsertTran(req,resp);
+        }else if ("/workbench/transaction/detail.do".equals(path)){
+            detail(req,resp);
+        }else if ("/workbench/transaction/TranHistoryByIdList.do".equals(path)){
+            TranHistoryByIdList(req,resp);
+        }else if ("/workbench/transaction/changStage.do".equals(path)){
+            changStage(req,resp);
         }
+
+    }
+
+    private void changStage(HttpServletRequest req, HttpServletResponse resp) {
+
+
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        Map<String,String> pMap= (Map<String, String>) this.getServletContext().getAttribute("pMap");
+        String stage=req.getParameter("stage");
+        String possibility=pMap.get(stage);
+        Tran t=new Tran();
+        t.setId(req.getParameter("id"));
+        t.setExpectedDate(req.getParameter("expectedDate"));
+        t.setMoney(req.getParameter("money"));
+        t.setPossibility(possibility);
+        t.setStage(stage);
+        t.setEditTime(DateTimeUtil.getSysTime());
+        t.setEditBy(((User)req.getSession().getAttribute("user")).getName());
+
+        Map<String,Object> map=tranService.changStage(t);
+
+        PrintJson.printJsonObj(resp,map);
+
+
+    }
+
+    private void TranHistoryByIdList(HttpServletRequest req, HttpServletResponse resp) {
+
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+
+        List<TranHistory> list=tranService.getTranHistoryByIdList(req.getParameter("tranId"));
+
+        Map<String,String> map= (Map<String, String>) this.getServletContext().getAttribute("pMap");
+
+        list.forEach(i -> i.setPossibility(map.get(i.getStage())));
+
+        PrintJson.printJsonObj(resp,list);
+
+    }
+
+    private void detail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+
+        Tran t=tranService.getTranById(req.getParameter("id"));
+
+        Map<String,String> map= (Map<String, String>) this.getServletContext().getAttribute("pMap");
+
+        String possibility=map.get(t.getStage());
+
+        t.setPossibility(possibility);
+
+        req.setAttribute("t",t);
+
+        req.getRequestDispatcher("/workbench/transaction/detail.jsp").forward(req,resp);
+
 
     }
 
@@ -75,12 +135,12 @@ public class TranController extends HttpServlet {
         t.setContactSummary(req.getParameter("contactSummary"));
         t.setNextContactTime(req.getParameter("nextContactTime"));
         String customerName=req.getParameter("customerName");
-   //    t.setPossibility(req.getParameter("customerName"));
 
-        tranService.insert(t,customerName);
+        boolean flag=tranService.insert(t,customerName);
 
-        resp.sendRedirect(req.getContextPath()+"/workbench/transaction/index.jsp");
-
+        if (flag) {
+            resp.sendRedirect(req.getContextPath() + "/workbench/transaction/index.jsp");
+        }
     }
 
     private void getCustomerName(HttpServletRequest req, HttpServletResponse resp) {
