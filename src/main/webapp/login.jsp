@@ -17,6 +17,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		$(function(){
 
+			if(window.top!=window){
+				window.top.location=window.location;
+			}
+
 			$("#loginAct").val("");
 			$("#loginAct").focus();
 

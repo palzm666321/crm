@@ -21,4 +21,6 @@ public interface TranService{
     List<TranHistory> getTranHistoryByIdList(String tranId);
 
     Map<String, Object> changStage(Tran t);
+
+    Map<String, Object> echarts();
 }

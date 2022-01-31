@@ -106,4 +106,18 @@ public class TranServiceImpl implements TranService {
 
         return map;
     }
+
+    @Override
+    public Map<String, Object> echarts() {
+
+        int total=tranDao.getCount();
+
+        List<Map<String,Object>> dataList=tranDao.getCountMap();
+
+        Map<String,Object> map=new HashMap<>();
+        map.put("total",total);
+        map.put("dataList",dataList);
+
+        return map;
+    }
 }

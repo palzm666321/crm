@@ -52,7 +52,19 @@ public class TranController extends HttpServlet {
             TranHistoryByIdList(req,resp);
         }else if ("/workbench/transaction/changStage.do".equals(path)){
             changStage(req,resp);
+        }else if ("/workbench/transaction/echarts.do".equals(path)){
+            echarts(req,resp);
         }
+
+    }
+
+    private void echarts(HttpServletRequest req, HttpServletResponse resp) {
+
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+
+        Map<String,Object> map=tranService.echarts();
+
+        PrintJson.printJsonObj(resp,map);
 
     }
 

@@ -94,6 +94,21 @@
 
     </update>
 
+    <select id="getCount" resultType="int">
+
+        select count(*) from tbl_tran
+
+    </select>
+
+    <select id="getCountMap" resultType="map">
+
+        select count(*) as value,stage as name
+        from tbl_tran
+        group by stage
+        order by stage
+
+    </select>
+
 </mapper>
 
 
